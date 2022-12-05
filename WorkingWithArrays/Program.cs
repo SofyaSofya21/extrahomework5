@@ -47,7 +47,28 @@ while (!programstop)
             Console.WriteLine();
             break;
         case "RemoveNumbers":
-            string numbersToRemove = ReadString("Для удаления чисел из массива, введите эти числа через пробел: ");
+            string numbersToRemoveOnce = ReadString("Для удаления чисел из массива, введите эти числа через пробел (ввод одного числа удалит только один элемент в массиве): ");
+            double[] numbersToRemoveFromArrayOnce = ParseArray(numbersToRemoveOnce, splitSymbol);
+            for (int i = 0; i < numbersToRemoveFromArrayOnce.Length; i++)
+            {
+                bool noNumber = CheckNumberInArray(numbersArray, numbersToRemoveFromArrayOnce[i]);
+                if (!noNumber)
+                {
+                    for (int j = 0; j < numbersToRemoveFromArrayOnce.Length; j++)
+                    {
+                        numbersArray = RemoveFromArrayNumber(numbersArray, numbersToRemoveFromArrayOnce[j]);
+                    }
+                    Console.WriteLine("Текущий массив: ");
+                    Console.WriteLine('[' + String.Join("; ", numbersArray) + ']');
+                    Console.WriteLine();
+                }
+                else
+                    Console.WriteLine("Такого(их) числа(чисел) нет в текущем массиве");
+                    Console.WriteLine();
+            }
+            break;
+        case "RemoveAllNumbers":
+            string numbersToRemove = ReadString("Для полного удаления чисел из массива, введите эти числа через пробел (ввод одного числа удалит все соответсвующие значения в массиве): ");
             double[] numbersToRemoveFromArray = ParseArray(numbersToRemove, splitSymbol);
             for (int i = 0; i < numbersToRemoveFromArray.Length; i++)
             {
@@ -191,7 +212,7 @@ double[] RemoveFromArrayNumber(double[] array, double removeNumber)
     return arrayNew;
 }
 
-// Убрать из массива все значения
+// Убрать из массива все одинаковые заданные значения
 double[] RemoveAllNumbers(double[] array, double removeNumber)
 {
     int count = 1;
@@ -237,10 +258,11 @@ void PrintMenu(string message)
     Console.WriteLine("1. Menu - вызов всех доступных команд");
     Console.WriteLine("2. SetNumbers - задать новый массив чисел");
     Console.WriteLine("3. AddNumbers - добавить числа к существующему массиву");
-    Console.WriteLine("4. RemoveNumbers - убрать из массива числа");
-    Console.WriteLine("5. Numbers - вывод текущего массива");
-    Console.WriteLine("6. Sum - сумма всех элементов массива");
-    Console.WriteLine("7. Exit - завершение программы");
+    Console.WriteLine("4. RemoveNumbers - убрать из массива по одному элементу каждого заданного числа");
+    Console.WriteLine("5. RemoveAllNumbers - убрать из массива все заданные числа");
+    Console.WriteLine("6. Numbers - вывод текущего массива");
+    Console.WriteLine("7. Sum - сумма всех элементов массива");
+    Console.WriteLine("8. Exit - завершение программы");
 }
 
 
